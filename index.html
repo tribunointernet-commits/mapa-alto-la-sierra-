@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>De María Cristina a Alto de la Sierra | El Tribuno</title>
+<link rel="preconnect" href="https://tile.openstreetmap.org">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoTtH8iYQeE9d4=" crossorigin="">
+<style>
+:root {color-scheme:light;--dark:#18253b;--muted:#59677b;--blue:#1478bc;--orange:#d25b27}
+*{box-sizing:border-box}html,body{margin:0;padding:0;background:#fff;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;color:var(--dark)}
+.wrap{width:100%;max-width:100%;border:1px solid #e4e8ee;border-radius:12px;overflow:hidden;background:#fff}
+.heading{padding:13px 16px 10px}.eyebrow{color:#738198;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.12em}.heading h1{margin:4px 0 3px;font-size:clamp(17px,3.8vw,22px);line-height:1.2}.heading p{margin:0;color:var(--muted);font-size:12px}
+#map{height:clamp(255px,48vw,375px);width:100%;z-index:0;background:#e9eff4}
+.legend{display:flex;gap:13px;align-items:center;flex-wrap:wrap;padding:10px 15px;font-size:12px;font-weight:650}.legend span{display:inline-flex;gap:6px;align-items:center}.dot{height:9px;width:9px;border-radius:50%;display:inline-block;background:var(--blue)}.dot.orange{background:var(--orange)}.dash{display:inline-block;width:23px;border-top:2px dashed #536376}
+.foot{border-top:1px solid #edf0f4;padding:7px 15px 11px;color:#69778c;font-size:11px;line-height:1.45}.brand{color:#1d344c;font-weight:800}.marker{width:18px;height:18px;border:3px solid white;border-radius:50%;box-shadow:0 1px 5px #0008}.place{font-size:13px;line-height:1.5}.place b{font-size:14px}.leaflet-popup-content{margin:10px 13px!important}.leaflet-control-attribution{font-size:9px!important}
+@media(max-width:450px){.heading{padding:10px 12px}.legend{gap:9px;padding:9px 12px}.foot{padding:7px 12px}.leaflet-control-zoom{margin:8px!important}}
+</style>
+</head>
+<body><main class="wrap" aria-label="Mapa interactivo de localidades">
+<header class="heading"><div class="eyebrow">Ubicación geográfica · Norte argentino</div><h1>De María Cristina a Alto de la Sierra</h1><p>Localidades situadas en Formosa y Salta, cerca del límite provincial</p></header>
+<div id="map" role="application" aria-label="Mapa interactivo con dos puntos: María Cristina, Formosa y Alto de la Sierra, Salta"></div>
+<div class="legend"><span><i class="dot"></i>Alto de la Sierra · Salta</span><span><i class="dot orange"></i>María Cristina · Formosa</span><span><i class="dash"></i>Referencia, no ruta</span></div>
+<footer class="foot">La línea punteada conecta los centros aproximados de ambas localidades <b>en línea recta</b>; no representa el recorrido por caminos ni el lugar donde se hallaron los cuerpos. Ubicaciones según OpenStreetMap y el registro oficial de localidades del Estado argentino. <span class="brand">El Tribuno</span></footer>
+</main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+const alto=[-22.7369,-62.49864],maria=[-22.738196249,-62.275395414];
+const map=L.map('map',{scrollWheelZoom:false,zoomControl:true,preferCanvas:true});
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'}).addTo(map);
+function marker(coordinates,color,title,province,detail){const point=L.divIcon({className:'',html:`<div class="marker" style="background:${color}"></div>`,iconSize:[18,18],iconAnchor:[9,9]});return L.marker(coordinates,{icon:point,title}).addTo(map).bindPopup(`<div class="place"><b>${title}</b><br>${detail}<br>${province}, Argentina</div>`);}
+marker(alto,'#1478bc','Alto de la Sierra','Salta','Departamento Rivadavia');marker(maria,'#d25b27','María Cristina','Formosa','Departamento Ramón Lista');
+L.polyline([maria,alto],{color:'#536376',weight:2,dashArray:'5 7',opacity:.85}).addTo(map);
+map.fitBounds(L.latLngBounds([alto,maria]).pad(.37),{animate:false,maxZoom:11});
+window.addEventListener('resize',()=>map.invalidateSize());
+</script></body></html>
