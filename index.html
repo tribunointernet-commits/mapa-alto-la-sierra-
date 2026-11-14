@@ -2,35 +2,110 @@
 <html lang="es-AR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>De María Cristina a Alto de la Sierra | El Tribuno</title>
-<link rel="preconnect" href="https://tile.openstreetmap.org">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoTtH8iYQeE9d4=" crossorigin="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>María Cristina y Alto de la Sierra | El Tribuno</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://basemaps.cartocdn.com" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
 <style>
-:root {color-scheme:light;--dark:#18253b;--muted:#59677b;--blue:#1478bc;--orange:#d25b27}
-*{box-sizing:border-box}html,body{margin:0;padding:0;background:#fff;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;color:var(--dark)}
-.wrap{width:100%;max-width:100%;border:1px solid #e4e8ee;border-radius:12px;overflow:hidden;background:#fff}
-.heading{padding:13px 16px 10px}.eyebrow{color:#738198;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.12em}.heading h1{margin:4px 0 3px;font-size:clamp(17px,3.8vw,22px);line-height:1.2}.heading p{margin:0;color:var(--muted);font-size:12px}
-#map{height:clamp(255px,48vw,375px);width:100%;z-index:0;background:#e9eff4}
-.legend{display:flex;gap:13px;align-items:center;flex-wrap:wrap;padding:10px 15px;font-size:12px;font-weight:650}.legend span{display:inline-flex;gap:6px;align-items:center}.dot{height:9px;width:9px;border-radius:50%;display:inline-block;background:var(--blue)}.dot.orange{background:var(--orange)}.dash{display:inline-block;width:23px;border-top:2px dashed #536376}
-.foot{border-top:1px solid #edf0f4;padding:7px 15px 11px;color:#69778c;font-size:11px;line-height:1.45}.brand{color:#1d344c;font-weight:800}.marker{width:18px;height:18px;border:3px solid white;border-radius:50%;box-shadow:0 1px 5px #0008}.place{font-size:13px;line-height:1.5}.place b{font-size:14px}.leaflet-popup-content{margin:10px 13px!important}.leaflet-control-attribution{font-size:9px!important}
-@media(max-width:450px){.heading{padding:10px 12px}.legend{gap:9px;padding:9px 12px}.foot{padding:7px 12px}.leaflet-control-zoom{margin:8px!important}}
+:root{--ink:#17283d;--muted:#637287;--blue:#1478bc;--orange:#d65d32}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;width:100%;background:#fff;color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+.card{width:100%;overflow:hidden;background:#fff;border:1px solid #e1e7ed;border-radius:12px}
+.head{padding:16px 18px 12px}
+.kicker{font-size:10px;line-height:1.2;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#718096}
+h1{font-size:clamp(19px,3vw,25px);line-height:1.15;margin:6px 0}
+.sub{margin:0;color:var(--muted);font-size:13px;line-height:1.4}
+.mapbox{position:relative;width:100%;height:clamp(340px,54vw,490px);min-height:340px;background:#e9eef2}
+#map{position:absolute;inset:0;width:100%;height:100%;background:#e9eef2}
+.status{position:absolute;z-index:500;left:12px;top:12px;background:#fff;border:1px solid #dce3ea;border-radius:7px;padding:7px 10px;font-size:11px;color:#596a7d;box-shadow:0 1px 5px #17283d18;pointer-events:none}
+.legend{display:flex;flex-wrap:wrap;gap:10px 18px;padding:12px 16px;border-top:1px solid #edf0f3}
+.legend span{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700}
+.dot{width:11px;height:11px;border-radius:50%;display:inline-block;border:2px solid #fff;box-shadow:0 0 0 1px #9aa8b8}
+.dot.blue{background:var(--blue)}.dot.orange{background:var(--orange)}
+.note{border-top:1px solid #edf0f3;padding:10px 16px 13px;color:#68778a;font-size:11px;line-height:1.45}
+.brand{font-weight:800;color:#253b54}
+.leaflet-container{font:12px Arial,Helvetica,sans-serif}
+.leaflet-control-attribution{font-size:9px!important}
+.leaflet-popup-content{margin:10px 12px!important}
+.popup b{font-size:14px}.popup small{color:#66758a}
+.pin{width:18px;height:18px;border:3px solid #fff;border-radius:50%;box-shadow:0 1px 7px #0008}
+.pin-label{background:#fff;border:1px solid #d7e0e8;border-radius:5px;padding:4px 7px;font-size:11px;font-weight:700;color:#24364b;white-space:nowrap;box-shadow:0 1px 4px #0002}
+@media(max-width:520px){.head{padding:13px 13px 10px}.mapbox{height:360px;min-height:360px}.legend{padding:10px 12px;gap:9px 13px}.note{padding:9px 12px 11px}}
 </style>
 </head>
-<body><main class="wrap" aria-label="Mapa interactivo de localidades">
-<header class="heading"><div class="eyebrow">Ubicación geográfica · Norte argentino</div><h1>De María Cristina a Alto de la Sierra</h1><p>Localidades situadas en Formosa y Salta, cerca del límite provincial</p></header>
-<div id="map" role="application" aria-label="Mapa interactivo con dos puntos: María Cristina, Formosa y Alto de la Sierra, Salta"></div>
-<div class="legend"><span><i class="dot"></i>Alto de la Sierra · Salta</span><span><i class="dot orange"></i>María Cristina · Formosa</span><span><i class="dash"></i>Referencia, no ruta</span></div>
-<footer class="foot">La línea punteada conecta los centros aproximados de ambas localidades <b>en línea recta</b>; no representa el recorrido por caminos ni el lugar donde se hallaron los cuerpos. Ubicaciones según OpenStreetMap y el registro oficial de localidades del Estado argentino. <span class="brand">El Tribuno</span></footer>
+<body>
+<main class="card">
+  <header class="head">
+    <div class="kicker">Ubicación geográfica · Norte argentino</div>
+    <h1>De María Cristina a Alto de la Sierra</h1>
+    <p class="sub">Dos localidades del norte argentino, ubicadas en Formosa y Salta, cerca del límite provincial.</p>
+  </header>
+  <section class="mapbox" aria-label="Mapa interactivo">
+    <div id="map"></div>
+    <div class="status" id="status">Cargando mapa…</div>
+  </section>
+  <div class="legend">
+    <span><i class="dot blue"></i>Alto de la Sierra · Salta</span>
+    <span><i class="dot orange"></i>María Cristina · Formosa</span>
+  </div>
+  <footer class="note">El mapa identifica la ubicación aproximada de ambas localidades. <b>No representa el recorrido realizado por la familia ni el lugar del hallazgo.</b> Cartografía © OpenStreetMap / CARTO. <span class="brand">El Tribuno</span></footer>
 </main>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-const alto=[-22.7369,-62.49864],maria=[-22.738196249,-62.275395414];
-const map=L.map('map',{scrollWheelZoom:false,zoomControl:true,preferCanvas:true});
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'}).addTo(map);
-function marker(coordinates,color,title,province,detail){const point=L.divIcon({className:'',html:`<div class="marker" style="background:${color}"></div>`,iconSize:[18,18],iconAnchor:[9,9]});return L.marker(coordinates,{icon:point,title}).addTo(map).bindPopup(`<div class="place"><b>${title}</b><br>${detail}<br>${province}, Argentina</div>`);}
-marker(alto,'#1478bc','Alto de la Sierra','Salta','Departamento Rivadavia');marker(maria,'#d25b27','María Cristina','Formosa','Departamento Ramón Lista');
-L.polyline([maria,alto],{color:'#536376',weight:2,dashArray:'5 7',opacity:.85}).addTo(map);
-map.fitBounds(L.latLngBounds([alto,maria]).pad(.37),{animate:false,maxZoom:11});
-window.addEventListener('resize',()=>map.invalidateSize());
-</script></body></html>
+(function(){
+  const status=document.getElementById('status');
+  if(!window.L){status.textContent='No se pudo cargar el mapa. Revisá la conexión o los bloqueadores de contenido.';return;}
+  // Coordenadas de referencia aproximadas de las localidades.
+  const alto=[-22.7369,-62.49864];
+  const maria=[-22.738196249,-62.275395414];
+
+  const map=L.map('map',{
+    scrollWheelZoom:false,
+    zoomControl:true,
+    dragging:true,
+    tap:true,
+    preferCanvas:true
+  });
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
+    subdomains:'abcd',
+    maxZoom:19,
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>'
+  }).addTo(map);
+
+  function addPlace(coords,color,name,province,department,offset){
+    const icon=L.divIcon({
+      className:'',
+      html:'<div class="pin" style="background:'+color+'"></div>',
+      iconSize:[18,18],
+      iconAnchor:[9,9]
+    });
+    const marker=L.marker(coords,{icon,title:name,keyboard:true}).addTo(map);
+    marker.bindPopup('<div class="popup"><b>'+name+'</b><br>'+department+'<br><small>'+province+', Argentina</small></div>');
+    marker.bindTooltip(name,{permanent:true,direction:offset||'top',offset:[0,-8],className:'pin-label'});
+    return marker;
+  }
+
+  addPlace(alto,'#1478bc','Alto de la Sierra','Salta','Departamento Rivadavia','top');
+  addPlace(maria,'#d65d32','María Cristina','Formosa','Departamento Ramón Lista','top');
+
+  const bounds=L.latLngBounds(alto,maria);
+  map.fitBounds(bounds.pad(0.65),{padding:[24,24],maxZoom:10,animate:false});
+  L.control.scale({metric:true,imperial:false,position:'bottomleft'}).addTo(map);
+
+  let loaded=false;
+  const tileLayer=map.eachLayer(function(layer){
+    if(layer instanceof L.TileLayer){
+      layer.on('tileload',function(){loaded=true;status.style.display='none';});
+      layer.on('tileerror',function(){if(!loaded)status.textContent='El mapa base no respondió. Probá recargar la página.';});
+    }
+  });
+  setTimeout(function(){if(!loaded)status.textContent='Cargando cartografía…';},2500);
+  setTimeout(function(){map.invalidateSize(true);},250);
+  window.addEventListener('resize',function(){map.invalidateSize(true);});
+})();
+</script>
+</body>
+</html>
