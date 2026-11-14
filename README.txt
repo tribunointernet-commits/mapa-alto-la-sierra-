@@ -1,12 +1,12 @@
-MAPA INTERACTIVO — EL TRIBUNO
+ACTUALIZACIÓN SIN API KEY
 
+Este mapa usa Leaflet y teselas públicas de OpenStreetMap. No requiere Google Maps API Key, Mapbox token ni clave de CARTO.
+
+Para actualizar:
 1. Descomprimir el ZIP.
-2. Subir el archivo index.html a la raíz del repositorio GitHub:
-   tribunointernet-commits/mapa-alto-la-sierra-
-3. Confirmar el commit y esperar a que GitHub Pages actualice el sitio.
-4. Mantener como URL:
-   https://tribunointernet-commits.github.io/mapa-alto-la-sierra-/
+2. Reemplazar el index.html en la raíz del repositorio mapa-alto-la-sierra-.
+3. Hacer commit/push y esperar que GitHub Pages publique el cambio.
+4. Abrir la URL con ?v=3 para evitar caché:
+https://tribunointernet-commits.github.io/mapa-alto-la-sierra-/?v=3
 
-El mapa usa Leaflet 1.9.4 y cartografía CARTO basada en OpenStreetMap.
-Necesita conexión a internet para cargar librería y teselas.
-Las coordenadas son aproximadas y la página aclara que no representa una ruta real.
+Requiere conexión a internet para cargar Leaflet y el mapa base.
