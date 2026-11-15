@@ -1,66 +1,75 @@
 <!doctype html>
 <html lang="es-AR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>María Cristina y Alto de la Sierra | El Tribuno</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alto de la Sierra y María Cristina | El Tribuno</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 *{box-sizing:border-box}html,body{margin:0;padding:0;width:100%;font-family:Arial,Helvetica,sans-serif;color:#17283d;background:#fff}
 .card{width:100%;border:1px solid #e1e6ec;border-radius:12px;overflow:hidden;background:#fff}
 header{padding:15px 17px 12px}.eyebrow{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#718096}
-h1{font-size:clamp(19px,3vw,25px);line-height:1.15;margin:6px 0}
-.sub{font-size:13px;line-height:1.4;color:#637287;margin:0}
-#map{width:100%;height:clamp(350px,55vw,500px);min-height:350px;background:#e8edf1}
-.legend{display:flex;flex-wrap:wrap;gap:10px 18px;padding:12px 16px;border-top:1px solid #edf0f3}
+h1{font-size:clamp(19px,3vw,25px);line-height:1.15;margin:6px 0 0}
+#map{width:100%;height:clamp(370px,58vw,520px);min-height:370px;background:#e8edf1}
+.legend{display:flex;flex-wrap:wrap;gap:10px 17px;padding:12px 16px;border-top:1px solid #edf0f3}
 .legend span{font-size:12px;font-weight:700;display:flex;align-items:center;gap:7px}
 .dot{width:11px;height:11px;border-radius:50%;display:inline-block;border:2px solid white;box-shadow:0 0 0 1px #9aa8b8}
-.blue{background:#1478bc}.orange{background:#d65d32}
+.blue{background:#1478bc}.orange{background:#d65d32}.grey{background:#7b8794}
 .note{padding:10px 16px 13px;border-top:1px solid #edf0f3;color:#68778a;font-size:11px;line-height:1.45}
-.pin{width:18px;height:18px;border:3px solid white;border-radius:50%;box-shadow:0 1px 7px #0008}
+.pin{width:19px;height:19px;border:3px solid white;border-radius:50%;box-shadow:0 1px 7px #0008}
 .pin-label{background:white;border:1px solid #d7e0e8;border-radius:5px;padding:4px 7px;font-size:11px;font-weight:700;color:#24364b;white-space:nowrap;box-shadow:0 1px 4px #0002}
+.province-label{font-size:12px;letter-spacing:.12em;font-weight:800;color:#52677b;text-shadow:0 1px 0 #fff,1px 0 0 #fff,-1px 0 0 #fff,0 -1px 0 #fff;white-space:nowrap}
 .leaflet-container{font:12px Arial,Helvetica,sans-serif}
 .leaflet-control-attribution{font-size:9px!important}
-@media(max-width:520px){header{padding:13px 13px 10px}#map{height:370px;min-height:370px}.legend{padding:10px 12px}.note{padding:9px 12px 11px}}
-</style>
-</head>
-<body>
-<div class="card">
-<header>
-<div class="eyebrow">Ubicación geográfica · Norte argentino</div>
-<h1>De María Cristina a Alto de la Sierra</h1>
-<p class="sub">Dos localidades del norte argentino, en Formosa y Salta, cerca del límite provincial.</p>
-</header>
-<div id="map" role="application" aria-label="Mapa interactivo de María Cristina y Alto de la Sierra"></div>
+@media(max-width:520px){header{padding:13px 13px 10px}#map{height:390px;min-height:390px}.legend{padding:10px 12px;gap:9px 12px}.note{padding:9px 12px 11px}}
+</style></head>
+<body><main class="card">
+<header><div class="eyebrow">Ubicación geográfica · Norte argentino</div><h1>¿Dónde están Alto de la Sierra y María Cristina?</h1></header>
+<div id="map" aria-label="Mapa interactivo de localidades de Salta y Formosa"></div>
 <div class="legend">
 <span><i class="dot blue"></i>Alto de la Sierra · Salta</span>
 <span><i class="dot orange"></i>María Cristina · Formosa</span>
+<span><i class="dot grey"></i>Otras localidades de referencia</span>
 </div>
-<div class="note">Las ubicaciones son referencias geográficas aproximadas. El mapa no representa el recorrido realizado por la familia ni el lugar del hallazgo. Cartografía © OpenStreetMap. El Tribuno.</div>
-</div>
+<footer class="note">Alto de la Sierra pertenece al departamento Rivadavia, en Salta. María Cristina se encuentra en el departamento Ramón Lista, en Formosa. Las localidades de referencia ayudan a ubicar la zona. El mapa no representa el recorrido realizado por la familia ni el lugar del hallazgo. Cartografía © OpenStreetMap. <b>El Tribuno</b>.</footer>
+</main>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 (function(){
- if(!window.L){document.getElementById('map').innerHTML='<div style="padding:20px;font:14px Arial">No se pudo cargar el componente del mapa. Verificá la conexión a internet.</div>';return;}
- const alto=[-22.7369,-62.49864], maria=[-22.738196249,-62.275395414];
- const map=L.map('map',{scrollWheelZoom:false}).setView([-22.738,-62.387],9);
+ const el=document.getElementById('map');
+ if(!window.L){el.innerHTML='<div style="padding:20px">No se pudo cargar el mapa. Verificá la conexión a internet.</div>';return;}
+ // Alto de la Sierra: coordenadas del listado oficial de localidades del Estado nacional.
+ const alto=[-22.68937729,-62.45277564];
+ // María Cristina: ficha de localidad del sistema nacional de obras públicas.
+ const maria=[-22.738196249,-62.275395414];
+ // Localidades cercanas que sirven como referencias regionales.
+ const santaVictoria=[-22.27729033,-62.70437195];
+ const generalMosconi=[-23.1838,-62.3066];
+
+ const map=L.map('map',{scrollWheelZoom:false}).setView([-22.72,-62.39],9);
  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-  maxZoom:19,
+  maxZoom:18,
   attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
  }).addTo(map);
- function point(coords,color,name,detail){
-  const icon=L.divIcon({className:'',html:'<div class="pin" style="background:'+color+'"></div>',iconSize:[18,18],iconAnchor:[9,9]});
+
+ function marker(coords,color,name,detail,label=true){
+  const icon=L.divIcon({className:'',html:'<div class="pin" style="background:'+color+'"></div>',iconSize:[19,19],iconAnchor:[9,9]});
   const m=L.marker(coords,{icon,title:name}).addTo(map);
   m.bindPopup('<b>'+name+'</b><br><span style="color:#68778a">'+detail+'</span>');
-  m.bindTooltip(name,{permanent:true,direction:'top',offset:[0,-8],className:'pin-label'});
+  if(label)m.bindTooltip(name,{permanent:true,direction:'top',offset:[0,-8],className:'pin-label'});
+  return m;
  }
- point(alto,'#1478bc','Alto de la Sierra','Departamento Rivadavia · Salta, Argentina');
- point(maria,'#d65d32','María Cristina','Departamento Ramón Lista · Formosa, Argentina');
- map.fitBounds(L.latLngBounds(alto,maria).pad(0.6),{padding:[20,20],maxZoom:10});
- L.control.scale({metric:true,imperial:false}).addTo(map);
- setTimeout(()=>map.invalidateSize(true),300);
+ marker(alto,'#1478bc','Alto de la Sierra','Departamento Rivadavia · Salta, Argentina');
+ marker(maria,'#d65d32','María Cristina','Departamento Ramón Lista · Formosa, Argentina');
+ marker(santaVictoria,'#7b8794','Santa Victoria Este','Departamento Rivadavia · Salta, Argentina');
+ marker(generalMosconi,'#7b8794','General Mosconi','Departamento Ramón Lista · Formosa, Argentina');
+
+ // Rótulos de provincias como orientación visual, sin dibujar límites administrativos aproximados.
+ const saltaLabel=L.marker([-22.52,-62.83],{interactive:false,icon:L.divIcon({className:'',html:'<div class="province-label">PROVINCIA DE SALTA</div>',iconSize:[160,20],iconAnchor:[80,10]})}).addTo(map);
+ const formosaLabel=L.marker([-22.55,-62.10],{interactive:false,icon:L.divIcon({className:'',html:'<div class="province-label">PROVINCIA DE FORMOSA</div>',iconSize:[180,20],iconAnchor:[90,10]})}).addTo(map);
+
+ const overview=L.latLngBounds([santaVictoria,generalMosconi,alto,maria,[-22.55,-62.73],[-22.55,-62.16]]);
+ map.fitBounds(overview,{padding:[24,24],maxZoom:8});
+ setTimeout(()=>map.invalidateSize(true),250);
  window.addEventListener('resize',()=>map.invalidateSize(true));
 })();
-</script>
-</body>
-</html>
+</script></body></html>

@@ -1,12 +1,13 @@
-ACTUALIZACIÓN SIN API KEY
+ACTUALIZACION DEL MAPA — REFERENCIAS GEOGRAFICAS
 
-Este mapa usa Leaflet y teselas públicas de OpenStreetMap. No requiere Google Maps API Key, Mapbox token ni clave de CARTO.
+Reemplazar el index.html del repositorio mapa-alto-la-sierra- por este archivo.
+No requiere API Key. Usa Leaflet y OpenStreetMap.
 
-Para actualizar:
-1. Descomprimir el ZIP.
-2. Reemplazar el index.html en la raíz del repositorio mapa-alto-la-sierra-.
-3. Hacer commit/push y esperar que GitHub Pages publique el cambio.
-4. Abrir la URL con ?v=3 para evitar caché:
-https://tribunointernet-commits.github.io/mapa-alto-la-sierra-/?v=3
+Incluye:
+- Alto de la Sierra (Rivadavia, Salta), con coordenadas del listado oficial nacional.
+- María Cristina (Ramón Lista, Formosa), con coordenadas de la ficha nacional.
+- Santa Victoria Este y General Mosconi como referencias regionales.
+- Rótulos de orientación para las provincias de Salta y Formosa.
+- Se quitó la frase descriptiva debajo del título, tal como se solicitó.
 
-Requiere conexión a internet para cargar Leaflet y el mapa base.
+Aclaración: no se dibuja una ruta ni se afirma que sea el recorrido de la familia.
